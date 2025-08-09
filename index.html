@@ -1,0 +1,104 @@
+<html>
+	<head>
+		<title> Password Generator by Taha </title>
+		<style>
+			* { font-size:40px; text-align:center; font-family: Arial, sans-serif;}
+			body { 
+				background: linear-gradient(135deg, #ffecd2, #fcb69f);
+				color: #2c3e50;
+			}
+			input[type=checkbox] {
+				width: 2%; 
+				height: 0.6em;
+				accent-color: #ff7f50; /* checkbox color */
+			}
+			input[type=number] {
+				background-color: #fff8f0;
+				color: #2c3e50;
+				border: 2px solid #ff7f50;
+				border-radius: 8px;
+				padding: 5px;
+			}
+			input[type=submit] {
+				background-color: #ff7f50;
+				color: white;
+				border: none;
+				padding: 10px 20px;
+				border-radius: 8px;
+				cursor: pointer;
+			}
+			input[type=submit]:hover {
+				background-color: #e6693e;
+			}
+			h2#msg {
+				color: #d35400;
+				text-shadow: 1px 1px 2px #fff;
+			}
+		</style>
+	</head>
+	<body>  
+		<h1> Password Generator </h1>
+
+		<form onsubmit="show()">
+
+			<input type="number" id="len" placeholder="Enter Password Length " />
+
+			<br/><br/>
+			<input type="checkbox" id="uc" /> Uppercase
+			<input type="checkbox" id="di" /> Digits
+			<input type="checkbox" id="sp" /> Special Characters
+			<br/><br/>
+			<input type="submit" value="Generate Password"/>
+		</form>
+		<h2 id="msg"></h2>
+
+		<script>
+			function show()
+			{
+				event.preventDefault();
+
+				let len = document.getElementById("len");
+				let uc = document.getElementById("uc");
+				let di = document.getElementById("di");
+				let sp = document.getElementById("sp");
+				let msg = document.getElementById("msg");
+
+				if (len.value === "")
+				{
+					alert("Length cannot be empty");
+					msg.innerHTML="";
+					len.focus();
+					return;
+				}
+
+				let le = parseInt(len.value);
+
+				if ((le <6) || (le > 12))
+				{
+					alert("Password length shud be min 6 and max 12");
+					len.value = ""
+					msg.innerHTML="";
+					len.focus();
+					return;
+				}
+
+				let text = "abcdefghijklmonpqrstuvwxyz";
+				if (uc.checked)
+					text = text + text.toUpperCase();
+				if(di.checked)
+					text = text + "0123456789";
+				if (sp.checked)
+					text = text + "!@#\$%^&*()";
+
+				let pw = "";
+				for(let i=1; i<=le; i++)
+				{
+					let r = parseInt(Math.random() * text.length);
+					pw = pw + text[r];
+				}
+
+				msg.innerHTML = pw;
+			}
+		</script>
+	</body>
+</html>
